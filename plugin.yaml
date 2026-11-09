@@ -1,0 +1,25 @@
+name: better-prompt
+version: 1.0.0-beta
+description: >-
+  Pre-audit your prompt before you send it. Live token/cost estimate, spelling
+  and command correction, rambling & wasted-loop detection, clarity and
+  missing-context checks, prompt template + workflow suggestions, a local
+  zero-token rewrite, and an optional AI polish on your active model. Ships a
+  second prompt bar in Hermes Desktop, a CLI command, a slash command, and a
+  TUI widget.
+author: shovexxx
+license: MIT
+requires_hermes: ">=0.21.5"
+# no python_dependencies: the audit engine is stdlib-only by design (zero deps,
+# zero token spend for the core feature).
+provides_tools:
+  - audit_prompt
+  - audit_prompt_file
+  - improve_prompt
+provides_commands:
+  - bhp-audit
+  - bhp-rewrite
+provides_skills:
+  - prompt-audit
+capabilities:
+  - llm.model_override

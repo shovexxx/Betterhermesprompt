@@ -1,0 +1,22 @@
+# Catalog entry for BetterPrompt — copy this file into a PR to
+# NousResearch/hermes-agent at plugin-catalog/better-prompt.yaml
+# and pin `sha` to the full 40-char commit of this repo at merge time.
+name: better-prompt
+repo: https://github.com/shovexxx/Betterhermesprompt
+subdir: .
+description: >-
+  Pre-audit your prompt before you send it. Live token/cost estimate, spelling
+  & command correction, rambling / wasted-loop detection, clarity and
+  missing-context checks, prompt templates + workflow tips, a local zero-token
+  rewrite, and an optional AI polish on your active model. Ships a second
+  prompt bar in Hermes Desktop, a CLI, slash commands, an agent tool + skill,
+  and a TUI widget.
+version: "1.0.0-beta"
+requires_hermes: ">=0.21.5"
+# sha: <40-char commit>   ← pin at merge time (rule 2)
+tier: community
+categories: [productivity]
+# Disclosure (rule 13): the core audit is 100% local (zero tokens, no network).
+# The only network/LLM use is the opt-in AI polish (slash /bhp-rewrite and the
+# improve_prompt tool), which calls ctx.llm with host-owned credentials against
+# the user's active provider. No telemetry, no third-party endpoints.

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8">
+<style>
+  *{margin:0;box-sizing:border-box}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:#0c0b14;color:#ece9ff;overflow:hidden}
+  .win{width:1200px;height:675px;background:#0c0b14;display:flex;flex-direction:column;font-size:20px}
+  .titlebar{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.08);color:#9a94c2;font-size:17px}
+  .titlebar .dot{width:13px;height:13px;border-radius:50%}
+  .titlebar .brand{font-weight:800;color:#8b7ef0;font-size:18px}
+  .grow{flex:1}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:transparent}
+</style>
+</head>
+<body>
+<div class="win">
+  <div class="titlebar">
+    <span class="brand">◆ Hermes Agent</span>
+    <span style="margin:0 8px">·</span>
+    <span>trunkmonkeys.org</span>
+    <span class="grow"></span>
+    <span>⚡ sessions</span>
+  </div>
+  <!-- transcript -->
+  <div style="flex:1;padding:26px 30px;display:flex;flex-direction:column;gap:18px;color:#cfc9e8">
+    <div style="opacity:.95"><b style="color:#8b7ef0">@you</b>
+      <div style="margin-top:8px;background:rgba(139,92,246,.10);border-left:3px solid #8b7ef0;padding:12px 16px;border-radius:10px">
+        refactor the login into docker, the auth in keycloak make them talk please
+      </div>
+    </div>
+    <div style="opacity:.9"><b style="color:#7df5b0">◆ hermes</b>
+      <div style="margin-top:8px;opacity:.8">Let me check the current setup… I need more specifics: docker-compose? which repo? in <span style="color:#8b7ef0">/login</span> scope…</div>
+    </div>
+    <div style="opacity:.45;text-align:center;padding-top:6px">— agent had to ask 3 clarifying questions —</div>
+  </div>
+  <!-- composer block -->
+  <div style="padding:12px 20px 10px;border-top:1px solid rgba(255,255,255,.1)">
+    <!-- the prompt bar -->
+    <div style="display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 16px">
+      <div style="flex:1;color:#8b84a8;font-size:20px">Type to ask Hermes anything…</div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span style="background:rgba(139,92,246,.18);color:#c9b8ff;border-radius:9px;padding:7px 13px;font-size:17px">Cmd+K</span>
+        <span style="background:#8b7ef0;color:#0b0a12;font-weight:700;border-radius:9px;padding:7px 18px;font-size:17px">Send</span>
+      </div>
+    </div>
+    <!-- BetterPrompt second bar -->
+    <div style="display:flex;align-items:center;gap:14px;margin-top:10px;padding:9px 10px;border-radius:11px;border:1px solid rgba(125,245,176,.28);background:rgba(125,245,176,.05)">
+      <span style="color:#7df5b0;font-size:17px;font-weight:800">◆ BetterPrompt</span>
+      <span style="background:rgba(255,255,255,.06);border-radius:7px;padding:2px 9px;color:#cfc9e8;font-size:16px">ON</span>
+      <div style="flex:1;height:9px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden">
+        <div style="width:20%;height:100%;background:#7df5b0;border-radius:6px"></div>
+      </div>
+      <span style="color:#fff;font-weight:800;font-size:18px">20<span style="color:#8b84a8;font-weight:500">/100</span></span>
+      <span style="color:#9a94c2;font-size:16px">~31 tok · $0.0024</span>
+      <span style="color:#f0a050;font-size:16px">⚠ contradiction · filler · vague</span>
+      <span style="background:#8b7ef0;color:#0b0a12;font-weight:700;border-radius:8px;padding:6px 14px;font-size:16px">Rewrite · 0 tok</span>
+      <span style="border:1px solid rgba(139,92,246,.5);color:#c9b8ff;border-radius:8px;padding:6px 13px;font-size:16px">Ask 5</span>
+    </div>
+  </div>
+</div>
+<script>
+  if (location.search.includes('rewritten') || location.hash === '#rewritten') {
+    const bar = document.querySelector('[style*="border-radius:6px;overflow:hidden"] div');
+    if (bar) bar.style.width = '92%';
+    const score = [...document.querySelectorAll('.win span')].find(s=>s.textContent.startsWith('64/'));
+    if (score) score.innerHTML = '92<span style="color:#8b84a8;font-weight:500">/100</span>';
+    const tok = [...document.querySelectorAll('.win span')].find(s=>s.textContent.startsWith('~31'));
+    if (tok) tok.textContent = '~21 tok · $0.0006';
+    const warn = [...document.querySelectorAll('.win span')].find(s=>s.textContent.includes('contradiction · filler · vague'));
+    if (warn) { warn.textContent = '✓ clear · scope + constraints'; warn.style.color='#7df5b0'; }
+    const send = [...document.querySelectorAll('.win span')].find(s=>s.textContent.includes('Ask 5'));
+    if (send) { send.textContent = '✓ no questions'; send.style.border='1px solid rgba(125,245,176,.5)'; send.style.color='#7df5b0'; }
+    // rewrite transcript line
+    const you = [...document.querySelectorAll('.win b')].find(b=>b.textContent==='@you');
+    if (you) {
+      const box = you.parentElement.querySelector('div');
+      if (box) box.firstChild.nodeValue = 'refactor login into a docker-compose service + keycloak auth, talking over the internal network. scope: repo /login/auth. acceptance: \u201chealthy\u201d endpoints + a login flow. constraints: keep current env vars, no new deps.';
+    }
+  }
+</script>
+</body>
+</html>
